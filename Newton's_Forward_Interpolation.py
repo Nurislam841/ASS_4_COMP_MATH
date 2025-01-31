@@ -3,6 +3,7 @@ x_values = [1, 2, 3]
 y_values = [-6, -1, 16]
 
 def calculate_forward_differences(x_vals, y_vals):
+# Formula: Δ^k(y) = y[i + k] - y[i]
 
     n = len(x_vals)
     diff_table = [y_vals[:]]
@@ -16,6 +17,8 @@ def calculate_forward_differences(x_vals, y_vals):
 
     return diff_table
 
+# Formula: P(x) = y0 + u*Δ(y0) + u(u-1)/2! * Δ^2(y0) + ...
+# where u is equal to (target_x - x0) / h
 
 def newton_forward_interpolation(x_vals, y_vals, target_x):
     h = x_vals[1] - x_vals[0]
@@ -24,6 +27,7 @@ def newton_forward_interpolation(x_vals, y_vals, target_x):
     u = (target_x - x_vals[0]) / h
     result = forward_diff[0][0]
     u_term = 1
+    # u, u(u-1), u(u-1)(u-2), ...
 
     for i in range(1, len(forward_diff)):
         u_term *= (u - (i - 1))
@@ -31,6 +35,8 @@ def newton_forward_interpolation(x_vals, y_vals, target_x):
         result += term
 
     return result
+
+# Formula: f'(x) ≈ Δ(y) / h
 
 def calculate_derivative(x_vals, y_vals, point_index):
     h = x_vals[1] - x_vals[0]
